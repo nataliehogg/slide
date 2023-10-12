@@ -1,0 +1,215 @@
+theory:
+  camb:
+    version: 1.5.0
+    path: null
+    speed: 0.3
+    stop_at_error: false
+    extra_args:
+      lens_potential_accuracy: 1
+      dark_energy_model: DarkEnergyPPF
+    ignore_obsolete: false
+    use_renames: false
+    external_primordial_pk: false
+    renames:
+      omegabh2: ombh2
+      omegach2: omch2
+      omegal: omega_de
+      omegak: omk
+      yhe: YHe
+      yheused: YHe
+      YpBBN: Y_p
+    input_params:
+    - H0
+    - ombh2
+    - omch2
+    - w
+    - wa
+    - omegak
+    - mnu
+    output_params:
+    - omegam
+likelihood:
+  tdcosmo.tdcosmo.TDCOSMO:
+    path: null
+    tdcosmo_lenses: data/tdcosmo7_likelihood_processed.pkl
+    slacs_sdss_lenses: data/slacs_sdss_likelihood_processed.pkl
+    slacs_ifu_lenses: data/slacs_ifu_likelihood_processed.pkl
+    num_distribution_draws: 200
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    python_path: /users/hoggn/python/tdcosmo_ext/
+    input_params:
+    - lambda_mst
+    - lambda_mst_sigma
+    - alpha_lambda
+    - a_ani
+    - a_ani_sigma
+    - H0
+    output_params: []
+  prior_omegam:
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    external: 'lambda _self: stats.norm.logpdf(_self.provider.get_param(''omegam''),
+      loc=0.298, scale=0.022)'
+    requires: omegam
+    input_params: []
+    output_params: []
+params:
+  lambda_mst:
+    prior:
+      dist: uniform
+      min: 0.5
+      max: 1.5
+    ref:
+      dist: norm
+      loc: 0.9
+      scale: 0.01
+    latex: \lambda_{\rm MST}
+    proposal: 0.001
+  lambda_mst_sigma:
+    prior:
+      dist: loguniform
+      a: 0.001
+      b: 0.5
+    latex: \sigma_{\lambda_{\rm MST}}
+    ref:
+      dist: norm
+      loc: 0.06
+      scale: 0.05
+    proposal: 0.001
+  alpha_lambda:
+    prior:
+      dist: uniform
+      min: -1.0
+      max: 1.0
+    ref:
+      dist: norm
+      loc: -0.07
+      scale: 0.01
+    latex: \alpha_{\lambda}
+    proposal: 0.001
+  a_ani:
+    prior:
+      dist: loguniform
+      a: 0.1
+      b: 5.0
+    latex: a_{\rm ani}
+    ref:
+      dist: norm
+      loc: 1.2
+      scale: 0.5
+    proposal: 0.001
+  a_ani_sigma:
+    prior:
+      dist: loguniform
+      a: 0.01
+      b: 1.0
+    latex: \sigma_{a_{\rm ani}}
+    ref:
+      dist: norm
+      loc: 0.18
+      scale: 0.25
+    proposal: 0.001
+  H0:
+    prior:
+      min: 0
+      max: 150
+    ref:
+      dist: norm
+      loc: 67
+      scale: 2
+    proposal: 0.001
+    latex: H_0
+  ombh2:
+    prior:
+      min: 0.005
+      max: 0.1
+    ref:
+      dist: norm
+      loc: 0.0224
+      scale: 0.0001
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+    renames:
+    - omegabh2
+  omch2:
+    prior:
+      min: 0.001
+      max: 0.99
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.001
+    proposal: 0.0005
+    latex: \Omega_\mathrm{c} h^2
+    renames:
+    - omegach2
+  omegam:
+    latex: \Omega_{\rm m}
+    derived: true
+  w:
+    prior:
+      min: -3.0
+      max: -0.33333
+    ref:
+      dist: norm
+      loc: -1.0
+      scale: 0.1
+    proposal: 0.001
+    latex: w_0
+  wa:
+    value: 0.0
+  omegak:
+    value: 0.0
+    renames:
+    - omk
+  mnu:
+    value: 0.06
+sampler:
+  mcmc:
+    burn_in: 0
+    max_tries: .inf
+    covmat: null
+    covmat_params: null
+    proposal_scale: 2.4
+    output_every: 60s
+    learn_every: 40d
+    learn_proposal: true
+    learn_proposal_Rminus1_max: 2.0
+    learn_proposal_Rminus1_max_early: 30.0
+    learn_proposal_Rminus1_min: 0.0
+    max_samples: .inf
+    Rminus1_stop: 0.01
+    Rminus1_cl_stop: 0.2
+    Rminus1_cl_level: 0.95
+    Rminus1_single_split: 4
+    measure_speeds: true
+    oversample_power: 0.4
+    oversample_thin: true
+    drag: false
+    blocking:
+    - - 1
+      - - H0
+        - ombh2
+        - omch2
+        - w
+    - - 1
+      - - lambda_mst
+        - lambda_mst_sigma
+        - alpha_lambda
+        - a_ani
+        - a_ani_sigma
+    callback_function: null
+    callback_every: null
+    seed: null
+    check_every: null
+    oversample: null
+    drag_limits: null
+    fallback_covmat_scale: 4
+    version: 3.2.2
+output: tdc_slacs_wcdm
+version: 3.2.2

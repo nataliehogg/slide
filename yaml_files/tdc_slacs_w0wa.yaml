@@ -1,0 +1,135 @@
+likelihood:
+    tdcosmo.tdcosmo.TDCOSMO:
+      python_path: /users/hoggn/python/tdcosmo_ext/
+      tdcosmo_lenses:  data/tdcosmo7_likelihood_processed.pkl
+      slacs_sdss_lenses: data/slacs_sdss_likelihood_processed.pkl
+      slacs_ifu_lenses: data/slacs_ifu_likelihood_processed.pkl
+      num_distribution_draws: 200
+    prior_omegam:  
+      external: "lambda _self: stats.norm.logpdf(_self.provider.get_param('omegam'), loc=0.298, scale=0.022)"
+      requires: omegam
+
+theory:
+    camb:
+        stop_at_error: False
+        extra_args:
+            lens_potential_accuracy: 1
+            dark_energy_model: DarkEnergyPPF
+
+params:
+  lambda_mst:
+      prior:
+        dist: uniform
+        min: 0.5
+        max: 1.5
+      ref:
+        dist: norm
+        loc: 0.9
+        scale: 0.01
+      proposal: 0.001
+      latex: \lambda_{\rm MST}
+  lambda_mst_sigma:
+      prior:
+        dist: loguniform
+        a: 0.001
+        b: 0.5
+      ref:
+        dist: norm
+        loc: 0.06
+        scale: 0.05
+      proposal: 0.001
+      latex: \sigma_{\lambda_{\rm MST}}
+  alpha_lambda:
+      prior:
+        dist: uniform
+        min: -1.0
+        max: 1.0
+      ref:
+        dist: norm
+        loc: -0.07
+        scale: 0.01
+      proposal: 0.001
+      latex: \alpha_{\lambda}
+  a_ani:
+      prior:
+        dist: loguniform
+        a: 0.1
+        b: 5.0
+      ref:
+        dist: norm
+        loc: 1.2
+        scale: 0.5
+      proposal: 0.001
+      latex: a_{\rm ani}
+  a_ani_sigma:
+      prior:
+        dist: loguniform
+        a: 0.01
+        b: 1.0
+      ref:
+        dist: norm
+        loc: 0.18
+        scale: 0.25
+      proposal: 0.001
+      latex: \sigma_{a_{\rm ani}}
+  H0:
+    prior:
+        min: 0
+        max: 150
+    ref:
+        dist: norm
+        loc: 67
+        scale: 2
+    proposal: 0.001
+    latex: H_0
+  ombh2:
+    prior:
+      min: 0.005
+      max: 0.1
+    ref:
+      dist: norm
+      loc: 0.0224
+      scale: 0.0001
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+  omch2:
+    prior:
+      min: 0.001
+      max: 0.99
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.001
+    proposal: 0.0005
+    latex: \Omega_\mathrm{c} h^2
+  omegam:
+    latex: \Omega_{\rm m}  
+  w:
+    prior:
+      min: -3.0
+      max: -0.33333
+    ref:
+      dist: norm
+      loc: -1.0
+      scale: 0.1
+    proposal: 0.001
+    latex: w_0
+  wa:
+    prior:
+      min: -4.0
+      max: 4.0
+    ref:
+      dist: norm
+      loc: 0.0
+      scale: 0.1
+    proposal: 0.001
+    latex: w_{\rm a}
+  omegak: 0.0
+  mnu: 0.06
+sampler:
+    mcmc:
+      Rminus1_stop: 0.01
+      max_tries: .inf
+
+output: /users/hoggn/python/tdcosmo_ext/chains/tdc_slacs_w0wa
+resume: True

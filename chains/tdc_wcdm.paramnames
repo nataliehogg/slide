@@ -1,0 +1,15 @@
+lambda_mst \lambda_{\rm int, 0}
+lambda_mst_sigma \sigma(\lambda_{\rm int})
+alpha_lambda \alpha_{\lambda}
+a_ani \langle a_{\rm ani} \rangle
+a_ani_sigma \sigma(a_{\rm ani})
+H0 H_0
+ombh2 \Omega_{\rm b} h^2
+omch2 \Omega_{\rm c} h^2
+w w
+omegam \Omega_{\rm m}
+minuslogprior m
+minuslogprior__0 m1
+chi2 \chi^2
+chi2__tdcosmo.tdcosmo.TDCOSMO \chi^2_t
+chi2__prior_omegam \chi^2_o
