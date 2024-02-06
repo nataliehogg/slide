@@ -1,4 +1,4 @@
-# A measurement of the dark energy equation of state with 40 strong lenses
+# Constraints on dark energy from TDCOSMO & SLACS lenses
 
 Natalie B. Hogg
 
