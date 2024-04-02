@@ -23,5 +23,4 @@ If you use any of the data products in this repository, please cite the [origina
     pages = "L95--L100",
     year = "2024"
 }
-
 ```
